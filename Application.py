@@ -108,3 +108,50 @@ def makegraphcontinent(var,lol):
                         plt.show()
                         break
             main_func()          
+####################################
+#CODE FOR GUI
+####################################
+def select(click,root):
+    if (click == 0):
+        root.destroy()
+        root=Tk()
+        root.title("Upto Date with Covid-19")
+        root.geometry("300x160")
+        root.configure(background='black')
+        var = StringVar()
+        var.set("Countries")
+        drop =OptionMenu(root,var,*country)
+        drop.pack()
+        mybutton=Button(root,text="Show graph",command=lambda:makegraphcountry(var.get(),root)).pack()
+
+    else:
+        root.destroy()
+        root=Tk()
+        root.title("Upto Date with Covid-19")
+        root.geometry("300x160")
+        root.configure(background='black')
+        canvas.pack()
+        var = StringVar()
+        var.set("Countries")
+        drop =OptionMenu(root,var,*continent)
+        drop.pack()
+        mybutton=Button(root,text="Show graph",command=lambda:makegraphcontinent(var.get(),root)).pack()
+
+def main_func():
+    root=Tk()
+    root.title("Upto Date with Covid-19")
+    
+    canvas=Canvas(root,width=300,height=160)
+
+    image=ImageTk.PhotoImage(Image.open("pic.jpg"))
+
+    canvas.create_image(0,0,anchor=NW,image=image)
+    canvas.pack()
+    var=IntVar()
+    var.set("3")
+    mylabel=Label(root,text="SELECT").pack()
+    Radiobutton(root,text="Countries",variable=var,value=0,command=lambda :select(var.get(),root)).pack()
+    Radiobutton(root,text="Continents",variable=var,value=1,command=lambda :select(var.get(),root)).pack()
+
+    root.mainloop()
+main_func()
