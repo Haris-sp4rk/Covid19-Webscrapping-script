@@ -6,7 +6,9 @@ import requests
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 import collections
+###################################
 #CODE FOE WEB SCRAPPING
+###################################
 website='https://www.worldometers.info/coronavirus/#countries'
 website_url=requests.get(website).text
 soup = BeautifulSoup(website_url,'html.parser')
@@ -60,3 +62,49 @@ df = pd.DataFrame(table_data2)
 df.to_excel('Covid19_datacontinent.xlsx', index=True)
 df = pd.DataFrame(table_data)
 df.to_excel('Covid19_data.xlsx', index=True)
+###############################
+#METHODS TO PLOT GRAPHS
+###############################
+def makegraphcountry(var,lol):
+            lol.destroy()
+            for cont in table_data:
+                for i in cont:
+                    if(cont[i]==var):
+                        newdict=cont
+                        a = sorted(newdict.items(), key=lambda x: x[1])
+                        sort_orders=collections.OrderedDict(a)
+                        sort_orders.pop("Country")
+                        x=list(sort_orders.keys())
+                        x.reverse()
+                        y=list(sort_orders.values())
+                        y.reverse()
+                        plt.title(var)
+                        plt.xlabel('Categories')
+                        plt.ylabel('Numbers')
+
+                        plt.bar(x,y,color=['r','b','g'])
+                        plt.show()
+                        break
+            main_func()   
+           
+
+def makegraphcontinent(var,lol):
+            lol.destroy()
+            for cont in table_data2:
+                for i in cont:
+                   if(cont[i]==var): 
+                        newdict=cont
+                        a = sorted(newdict.items(), key=lambda x: x[1])
+                        sort_orders=collections.OrderedDict(a)
+                        sort_orders.pop("Continent")
+                        x=list(sort_orders.keys())
+                        x.reverse()
+                        y=list(sort_orders.values())
+                        y.reverse()
+                        plt.title(var)
+                        plt.xlabel('Categories')
+                        plt.ylabel('Numbers')
+                        plt.bar(x,y,color=['r','b','g'])
+                        plt.show()
+                        break
+            main_func()          
